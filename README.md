@@ -3,28 +3,15 @@
 * This is 1 part of a Gradle multiproject composed by 2 projects. The other one is AppinstallerDrivers; a war exposing a Javawebstart (jnlp) depending on a series of jars and embedded native libraries.
 * This is the same project as [installerdriversc](https://bitbucket.org/elbillyto/installerdriversc), which simply adopted a CodeBlocks Layout
 
-### What is this repository for? ###
+## Synopsis
+This Project builds a dynamic library with jni 
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### What is this repository for? ###
+**POC** to address **native invocation through jni/java** from a java Webstart Aplication 
 
 ### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
+* gradle assemble
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* elbillyto
