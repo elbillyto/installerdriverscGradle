@@ -1,0 +1,83 @@
+// build.gradle
+apply plugin: 'c'
+
+def nativeHeadersDirJNI = "ruta hasta jni.h"
+def javaHome ="${project.property('org.gradle.java.home')}"
+def javaCASA = System.getProperty("java.home")
+def filesep= System.getProperty("file.separator")
+javaCASA =javaCASA.minus("${filesep}jre")
+def ruta_DLL_NativeCb= "${buildDir}/libs/${project.name}/shared/debug/${project.name}.dll"
+def ruta_DLL_NativeC= ruta_DLL_NativeCb.replaceAll(/\\+/, '/')
+
+
+model {
+
+    buildTypes {
+        debug
+        release
+    }
+    components {
+        DriversNativoC(NativeLibrarySpec){
+        	sources {
+                c.lib library: 'jdk', linkage: 'api'
+            }
+        }
+    }        
+
+	// para jni.h
+	//			<Add directory="C:/Program Files/Java/jdk1.8.0_66/include" />
+	//			<Add directory="C:/Program Files/Java/jdk1.8.0_66/include/win32" />    
+
+	repositories {
+	    libs(PrebuiltLibraries) {
+	        jdk {
+		        //En lugar de establecer la ruta del JAVA_HOME en gradle.properties
+		        //es mejor definir un método que pudiese recuperarlo de variable
+		        //de entorno JAVA_HOME o del propio sistema gradle
+
+		        headers.srcDir "${javaCASA}/include"
+
+		        binaries.all {		        	
+		          if (targetPlatform.operatingSystem.windows) {
+		            headers.srcDir "${javaCASA}/include/win32"
+		            nativeHeadersDirJNI ="${javaCASA}/include/win32"
+		            //println "--------RUTA de JNI.h--------"
+		            //println nativeHeadersDirJNI
+
+		          } else if (targetPlatform.operatingSystem.linux) {
+		            headers.srcDir "${javaCASA}/include/linux"
+		          } else {
+		            headers.srcDir "${javaCASA}/include/darwin"    
+		          }
+		        }
+	        }
+		}
+	}
+
+    binaries {    	
+    	withType(SharedLibraryBinarySpec) {//en lugar de all
+        //all {
+            // Define toolchain-specific compiler and linker options
+            //if (toolChain in Gcc && buildType == buildTypes.debug) {} else{}
+            if (toolChain in Gcc) {
+            	if (buildType == buildTypes.debug){
+                	cCompiler.args "-Wall" , "-g", "-I${nativeHeadersDirJNI}"
+                	linker.args "-shared","-Xlinker", "--add-stdcall-alias"
+                }else{
+            		cCompiler.args "-O2", "-I${nativeHeadersDirJNI}"
+            		linker.args "-shared","-Xlinker", "--add-stdcall-alias"
+                }
+            }
+            if (toolChain in VisualCpp) {
+                cCompiler.args "/Zi"
+                linker.args "/DEBUG"
+            }
+        }
+    }
+
+
+
+
+}
+
+
