@@ -1,6 +1,7 @@
 # README #
 
-This is 1 part of a Gradle multiproject composed by 2 projects. The other one is AppinstallerDrivers; a war exposing a Javawebstart (jnlp) depending on a series of jars and embedded native libraries.
+*This is 1 part of a Gradle multiproject composed by 2 projects. The other one is AppinstallerDrivers; a war exposing a Javawebstart (jnlp) depending on a series of jars and embedded native libraries.
+* This is the same project as [installerdriversc](https://bitbucket.org/elbillyto/installerdriversc), which simply adopted a CodeBlocks Layout
 
 ### What is this repository for? ###
 
