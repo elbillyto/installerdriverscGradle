@@ -37,4 +37,5 @@
 *.save
 
 #Gradle
+.gradle/
 ./gradle
