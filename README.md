@@ -1,3 +1,4 @@
+![logo]https://avatars1.githubusercontent.com/u/124156?v=3&s=200)
 # README #
 
 * This is 1 part of a Gradle multiproject composed by 2 projects. The other one is AppinstallerDrivers; a war exposing a Javawebstart (jnlp) depending on a series of jars and embedded native libraries.
